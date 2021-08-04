@@ -1,7 +1,9 @@
 # Dockers for software development
 
 ## alpine-php5.6-7.2-mysql5
-Building time: 162.7s, size: 781M
+Building time: 162.7s, size: 264M
+
+You can pull built image directly from: https://hub.docker.com/r/uuware/alpine-php5.6-7.2-mysql5
 
 * OS: alpine:3.8
 * Apache: 2.4
@@ -11,16 +13,11 @@ Building time: 162.7s, size: 781M
 * NodeJS: 14.17
 * Python: 2.7
 
-Installing Mysql increases 150M size
-
-Installing composer and phpmyadmin increases 250M size
-
-Installing python increases 35M size
-
-Installing nodejs increases 110M size
-
 ## debian-php5-7-8-mysql5
-Building time: 40m (5 PHP versions), size: 1.19G
+Building time: 40m (5 PHP versions), size: 431M
+
+You can pull built image directly from: https://hub.docker.com/r/uuware/debian-php5-7-8-mysql5
+
 
 * OS: debian:jessie
 * Apache: 2.4
