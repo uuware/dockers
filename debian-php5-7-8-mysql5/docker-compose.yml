@@ -1,0 +1,35 @@
+# By default, it only installs PHP 5.3 5.6 7.0 7.4 8.0, but you can change it in Dockerfile
+# First building time is 40 minutes, if you add more PHP versions it'll be longer.
+# All supported PHP versions: 5.3.29 5.4.45 5.5.38 5.6.40 7.0.33 7.1.33 7.2.34 7.3.28 7.4.22 8.0.9
+# The port 8053 maps to PHP5.3, 8080 maps to PHP8.0 and so on
+version: '3.1'
+services:
+  web:
+    container_name: debian-php5-7-8-mysql5
+    hostname: web
+    environment:
+      # after installed, mysql root password can be chenged by running this in docker:
+      # '/usr/bin/mysqladmin' -u root password 'new-password'
+      - MYSQL_ROOT_PASSWORD=MysqlPassword123
+      # - MYSQL_DATABASE=app
+      # - MYSQL_USER
+      # - MYSQL_PASSWORD
+    build:
+      context: "."
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./var/init:/var/init"
+      - "./var/mysql-data:/var/lib/mysql"
+      - "./var/www:/var/www"
+    ports:
+      - "8053:8053"
+      # - "8054:8054"
+      # - "8055:8055"
+      - "8056:8056"
+      - "8070:8070"
+      # - "8071:8071"
+      # - "8072:8072"
+      # - "8073:8073"
+      - "8074:8074"
+      - "8080:8080"
+      - "8306:3306"

@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  web:
+    container_name: alpine-php5.6-7.2-mysql5
+    hostname: web
+    environment:
+      # after installed, mysql root password can be chenged by running this in docker:
+      # '/usr/bin/mysqladmin' -u root password 'new-password'
+      - MYSQL_ROOT_PASSWORD=MysqlPassword123
+      # - MYSQL_DATABASE=app
+      # - MYSQL_USER
+      # - MYSQL_PASSWORD
+      # set time zone for linux: Asia/Shanghai, Asia/Tokyo
+      - TIME_ZONE=Pacific/Auckland
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    volumes:
+      # if the file /var/init/init.sh exists, then run it to initilize some processes when start docker
+      - "./var/init:/var/init"
+      - "./var/mysql-data:/var/lib/mysql"
+      - "./var/www:/var/www/html/"
+    ports:
+      # 3306 for connecting mysql. Or phpmyadmin: http://localhost:9056/phpmyadmin/
+      - "9306:3306"
+      # php 7.2
+      - "9072:8072"
+      # php 5.6
+      - "9056:8056"
