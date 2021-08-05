@@ -83,6 +83,14 @@ COPY docker-phpfarm/apache /etc/apache2/
 # Import our own modifications for the PhpFarm script.
 COPY docker-phpfarm/phpfarm /phpfarm_mod
 
+RUN { \
+    echo '# global FCGI config'; \
+    echo 'FcgidFixPathinfo 1'; \
+    echo '<IfModule dir_module>'; \
+    echo '  DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm'; \
+    echo '</IfModule>'; \
+    } > /etc/apache2/phpfarm.conf
+
 
 # expose the ports
 EXPOSE 8053 8054 8055 8056 8070 8071 8072 8073 8074 8080
