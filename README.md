@@ -59,8 +59,10 @@ services:
   web:
     hostname: web
     environment:
-      # after installed, mysql root password can be chenged by running this in docker:
+      # if installed from image, then this for changing mysql root password doesn't work. don't know why.
       # '/usr/bin/mysqladmin' -u root password 'new-password'
+      # but you can login with inputing a password in terminal: mysql -uroot -hlocalhost -p
+      # login from phpmyadmin is OK.
       - MYSQL_ROOT_PASSWORD=MysqlPassword123
     image: uuware/debian-php5-7-8-mysql5
     volumes:
