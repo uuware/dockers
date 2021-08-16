@@ -46,7 +46,7 @@ The easy and fast way is to run from built image.
 
 * /var/www: web root
 * /var/lib/mysql: MYSQL data
-* /var/init: if you put init.sh here, then it's called when containser is started
+* /var/init: if you put init.sh here, then it's called when container is started. For example, when the container is damaged, it stops immediately after started. Then you can put `cat` in init.sh to hold on the container, to let you have chance to run into the container.
 
 If you are using VS Code and installed Docker Extension, then you can create a docker-compose.yml, and right click on it to Compose Up.
 A sample for docker-compose.yml.
@@ -77,4 +77,21 @@ services:
       - "8074:8074"
       - "8080:8080"
       - "8306:3306"
+```
+
+## Setting for uploading file size to PHP
+The following is added to php.ini
+```
+upload_max_filesize = 50M
+post_max_size = 50M
+# This sets the maximum time in seconds a script is allowed to run before it is terminated. The default is 30 seconds.
+max_execution_time = 180
+# This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET.
+# The default setting is -1, which means that max_execution_time is used instead. Set to 0 to allow unlimited time.
+max_input_time = 180
+```
+
+and added to apache's configuration for mod_fcgid mode.
+```
+MaxRequestLen 51200000
 ```

@@ -29,8 +29,8 @@ if [[ $VERSION == *"RC"* ]]; then
 elif [[ $VERSION == "x.x.x" ]]; then
     URL="https://github.com/php/php-src/tarball/master"
     OUT="$DIR/php-$VERSION.tar.gz"
-elif [ $VERSION \< "5.6" ]; then
-    URL="http://museum.php.net/php5/php-$VERSION.tar.bz2"
+# elif [ $VERSION \< "5.6" ]; then
+#     URL="http://museum.php.net/php5/php-$VERSION.tar.bz2"
 else
     URL="http://php.net/get/php-$VERSION.tar.bz2/from/this/mirror"
 fi

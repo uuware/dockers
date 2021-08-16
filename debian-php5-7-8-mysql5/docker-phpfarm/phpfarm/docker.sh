@@ -63,6 +63,11 @@ do
     cd .. && \
     rm -rf xdebug-$XDBGVERSION && \
     rm -f $XDBGVERSION.tar.gz && \
+    sed -E -i -e 's/max_execution_time = 30/max_execution_time = 180/' /phpfarm/inst/php-$V/etc/php.ini && \
+    sed -E -i -e 's/max_input_time = 60/max_input_time = 180/' /phpfarm/inst/php-$V/etc/php.ini && \
+    # sed -E -i -e 's/memory_limit = 128M/memory_limit = 512M/' /phpfarm/inst/php-$V/etc/php.ini && \
+    sed -E -i -e 's/post_max_size = 8M/post_max_size = 50M/' /phpfarm/inst/php-$V/etc/php.ini && \
+    sed -E -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 50M/' /phpfarm/inst/php-$V/etc/php.ini && \
     cat xdebug.ini >> /phpfarm/inst/php-$V/etc/php.ini
 
     # enable apache config - compatible with wheezy and jessie

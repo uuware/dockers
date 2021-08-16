@@ -83,14 +83,7 @@ COPY docker-phpfarm/apache /etc/apache2/
 # Import our own modifications for the PhpFarm script.
 COPY docker-phpfarm/phpfarm /phpfarm_mod
 
-RUN { \
-    echo '# global FCGI config'; \
-    echo 'FcgidFixPathinfo 1'; \
-    echo '<IfModule dir_module>'; \
-    echo '  DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm'; \
-    echo '</IfModule>'; \
-    } > /etc/apache2/phpfarm.conf
-
+RUN echo 'Include php-all.conf' >> /etc/apache2/apache2.conf
 
 # expose the ports
 EXPOSE 8053 8054 8055 8056 8070 8071 8072 8073 8074 8080
@@ -188,15 +181,25 @@ EXPOSE 3306
 
 
 # install node
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash && \
-    . $HOME/.nvm/nvm.sh && \
-    nvm install --lts
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" && \
+    . "$NVM_DIR/nvm.sh" && \
+    nvm install --lts && \
+    # use node with bash
+   ln -s /root/.nvm/versions/node/v14.17.5/bin/node /usr/bin/node
 
+# # install Python 3.9.2
+# RUN echo 'deb http://ftp.de.debian.org/debian jessie main' >> /etc/apt/sources.list
+# RUN echo 'deb http://security.debian.org/debian-security jessie/updates main ' >> /etc/apt/sources.list
+# RUN echo 'deb http://ftp.de.debian.org/debian sid main' >> /etc/apt/sources.list
+# RUN apt-get -y install python3 python3-distutils
 
-# install python
+# install python 3.4.2, use python3 --version to confirm
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     python3
+
+
 
 
 # Clean up apt package lists.

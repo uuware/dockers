@@ -89,6 +89,11 @@ RUN apk add --update --no-cache \
     libxml2-dev
 
 
+RUN sed -E -i -e 's/max_execution_time = 30/max_execution_time = 180/' /etc/php5/php.ini && \
+  sed -E -i -e 's/max_input_time = 60/max_input_time = 180/' /etc/php5/php.ini && \
+  # sed -E -i -e 's/memory_limit = 128M/memory_limit = 512M/' /etc/php5/php.ini && \
+  sed -E -i -e 's/post_max_size = 8M/post_max_size = 50M/' /etc/php5/php.ini && \
+  sed -E -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 50M/' /etc/php5/php.ini
 
 RUN  rm -rf /var/cache/apk/*
 
@@ -108,6 +113,8 @@ RUN { \
     echo '<IfModule dir_module>'; \
     echo '  DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm'; \
     echo '</IfModule>'; \
+    echo '# mod_fcgid mode, set request len to 50M'; \
+    echo 'MaxRequestLen 51200000'; \
     } > /etc/apache2/conf.d/phpfarm.conf
 
 
@@ -168,6 +175,14 @@ RUN apk add --no-cache php7 \
     libxml2-dev \
     php7-tokenizer
     # php-pecl-redis
+
+
+RUN sed -E -i -e 's/max_execution_time = 30/max_execution_time = 180/' /etc/php7/php.ini && \
+  sed -E -i -e 's/max_input_time = 60/max_input_time = 180/' /etc/php7/php.ini && \
+  # sed -E -i -e 's/memory_limit = 128M/memory_limit = 512M/' /etc/php7/php.ini && \
+  sed -E -i -e 's/post_max_size = 8M/post_max_size = 50M/' /etc/php7/php.ini && \
+  sed -E -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 50M/' /etc/php7/php.ini
+
 
 RUN  rm -rf /var/cache/apk/*
 
